@@ -9,10 +9,11 @@ import matplotlib.image as mpimg
 
 class Mask():
     def __init__(self,vis = False):
-        self.anno_path = os.path.join("mask",os.listdir("mask")[0])
-        self.pts_path = "D:/CUesed/defect_detection/test4/mask/pts.json"
-        self.imgs_path = "D:/CUesed/defect_detection/test4/testImage4"
-        self.imgs_save_path = "D:/CUesed/defect_detection/test4/res"
+        self.root_path = "D:/CUesed/defect_detection/test4"
+        self.anno_path = os.path.join(self.root_path,"mask/mask.json")
+        self.pts_path = os.path.join(self.root_path,"mask/pts.json")
+        self.imgs_path = os.path.join(self.root_path,"images")
+        self.imgs_save_path = os.path.join(self.root_path,"res")
         self.pts = self.init_pts()
         self.vis = vis
 
