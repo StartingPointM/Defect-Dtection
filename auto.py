@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 import json
 import os
 import matplotlib.image as mpimg
-import segmentation
 
 def grad(input_array):
     length = len(input_array)
@@ -64,8 +63,7 @@ for pos in range(h):
         boundary = []
         for idx,item in enumerate(boundary_candidate):
             if np.median(y_array[item:item+length_threshold]) > gray_value_threshold[0] \
-                    and np.median(y_array[item:item+length_threshold]) < gray_value_threshold[1] \
-                    and :
+                    and np.median(y_array[item:item+length_threshold]) < gray_value_threshold[1] :
                 boundary.append(item)
             if np.median(y_array[item-length_threshold:item]) > gray_value_threshold[0] and np.median(y_array[item-length_threshold:item])< gray_value_threshold[1]:
                 boundary.append(item)
