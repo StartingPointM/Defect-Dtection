@@ -6,7 +6,7 @@ import json
 import os
 import matplotlib.image as mpimg
 
-ss
+
 
 img_path = "C:\\Users\\MAHanwei\\PycharmProjects\\Defect-Dtection\\resource\\test\\res\\template_1.jpg"
 img_bgr = cv2.imread(img_path)
