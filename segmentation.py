@@ -14,7 +14,18 @@ class Mask():
         self.imgs_path = os.path.join(self.root_path,"images")
         self.imgs_save_path = os.path.join(self.root_path,"res")
         self.pts = self.init_pts()
+        self.mask = self.init_mask()
+
         self.vis = vis
+    def init_mask(self):
+        self.imgs_name, self.imgs_path = self.load_imgs()
+        img = cv2.imread(self.imgs_path[0])
+        # 和原始图像一样大小的0矩阵，作为mask
+        mask = np.zeros(img.shape[:2], np.uint8)
+        # 在mask上将多边形区域填充为白色
+        cv2.polylines(mask, self.pts, 1, 255)  # 描绘边缘
+        cv2.fillPoly(mask, self.pts, 255)  # 填充
+        return mask
 
     def init_pts(self):
         if not os.path.exists(self.pts_path):
@@ -40,15 +51,9 @@ class Mask():
     def imgsprocess(self):
         if not os.path.exists(self.imgs_save_path):
             os.mkdir(self.imgs_save_path)
-        imgs_name, imgs_path = self.load_imgs()
-        for img_name,img_path in zip(imgs_name,imgs_path):
+        for img_name,img_path in zip(self.imgs_name,self.imgs_path):
             img = cv2.imread(img_path)
-            # 和原始图像一样大小的0矩阵，作为mask
-            mask = np.zeros(img.shape[:2], np.uint8)
-            # 在mask上将多边形区域填充为白色
-            cv2.polylines(mask, self.pts, 1, 255)  # 描绘边缘
-            cv2.fillPoly(mask, self.pts, 255)  # 填充
-            dst = cv2.bitwise_and(img, img, mask=mask)
+            dst = cv2.bitwise_and(img, img, mask=self.mask)
             cv2.imwrite(os.path.join(self.imgs_save_path,img_name),dst)
 
             #可视化
